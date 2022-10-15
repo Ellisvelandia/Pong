@@ -1,8 +1,8 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+canvas.width = 700;
+canvas.height = 350;
 
 class Paddle {
   constructor({ position }) {
@@ -16,7 +16,7 @@ class Paddle {
   }
 
   draw() {
-    c.fillStyle = "white";
+    c.fillStyle = "black";
     c.fillRect(this.position.x, this.position.y, this.width, this.height);
   }
 
@@ -24,10 +24,8 @@ class Paddle {
     this.draw();
 
     if (
-      this.position.y > 0 &&
-      this.position.y + this.height <
-        canvas.height + this.velocity.y <
-        canvas.height
+      this.position.y + this.velocity.y > 0 &&
+      this.position.y + this.height + this.velocity.y < canvas.height
     )
       this.position.y += this.velocity.y;
   }
@@ -37,7 +35,7 @@ class Ball {
   constructor({ position }) {
     this.position = position;
 
-    const speed = 2;
+    const speed = 3;
     const direction = {
       x: Math.random() - 0.5 >= 0 ? -speed : speed,
       y: Math.random() - 0.5 >= 0 ? -speed : speed,
@@ -51,7 +49,7 @@ class Ball {
   }
 
   draw() {
-    c.fillStyle = "white";
+    c.fillStyle = "black";
     c.fillRect(this.position.x, this.position.y, this.width, this.height);
   }
 
@@ -84,7 +82,7 @@ class Ball {
     // reverse directions
 
     if (
-      this.position.y + this.width + this.velocity.y >= canvas.width ||
+      this.position.y + this.width + this.velocity.y >= canvas.height ||
       this.position.y + this.velocity.y <= 0
     ) {
       this.velocity.y = -this.velocity.y;
@@ -118,7 +116,7 @@ const ball = new Ball({
 
 function animate() {
   requestAnimationFrame(animate);
-  c.fillStyle = "black";
+  c.fillStyle = "white";
   c.fillRect(0, 0, canvas.width, canvas.height);
   paddle1.update();
   paddle2.update();
